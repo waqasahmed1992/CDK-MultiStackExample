@@ -2,6 +2,7 @@ from aws_cdk import (
     # Duration,
     Stack,
     CfnOutput,
+    aws_ec2 as ec2,
     aws_s3 as s3,
     # aws_sqs as sqs,
 )
@@ -37,3 +38,22 @@ class ComponentStack(Stack):
         #     self, "ComponentQueue",
         #     visibility_timeout=Duration.seconds(300),
         # )
+
+class VpcNetwork(BasicStack):
+    
+    def __init__(
+        self,
+        scope: Construct,
+        env: env,
+        **kwargs,
+    ) -> None:
+        super().__init__(scope, env, **kwargs)
+        
+        # define your resource here
+        
+        myvpc = ec2.Vpc(
+            self, 
+            "myiuvpc",
+            ip_addresses=IpAddresses.cidr("10.0.0.0/16")
+            )
+
